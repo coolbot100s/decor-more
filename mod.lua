@@ -27,6 +27,6 @@ function make_variated(obj) -- pass a normal object definition
     for i = 1,#COLORS do
         obj["id"] = COLORS[i] .. "_" .. obj["id"]
         obj["name"] = up(COLORS[i]) .. " " .. obj["name"]
-        api_define_object(obj, "sprites/" .. obj[id])
+        api_define_object(obj, "sprites/" .. obj[id .. "_sheet.png"])
     end
 end
