@@ -15,7 +15,15 @@ end
 
 COLORS = {"red","blue","yellow","green","orange","purple","black","white","gold","turqoise","lime","pink","brown"}
 
-variated_objects_generics = {{"object definition table goes here"}} --contains object deifinitions for things that should recieve color variations.
+variated_objects_generics = { --contains object deifinitions for things that should recieve color variations.
+    {
+        id = "wood_chair",
+        name = "Wood Chair",
+        category = "Furniture",
+        tooltip = "A comfy wooden chair!",
+        tools = {"hammer1"}
+    }
+}
 
 --- Returns a table of tables that contain obj_definitions and sprites with desired variations that can then be used like so: api_define_object(returned_val[i][1], returned_val[i][2])
 ---@param obj_def obj_definition An obj_definition that contains a non-variated version of the item.
@@ -34,8 +42,7 @@ function make_variated( obj_def, variations, folder, edit_tooltip, tooltip)
             else
                 obj_def["tooltip"] = tooltip["preface"] .. " " .. up(variations[i]) .. " " .. tooltip["suffix"]
             end
-        sprite_path = "sprites/" .. folder .. "/" .. obj_def["id"] .. "_sheet.png"
-        table.insert({obj_def, sprite_path})
+        table.insert({obj_def, sprite_path(obj_def["id"])})
         end
     return variation_list
     end
@@ -46,6 +53,20 @@ function define_from_variation_list(variation_list)
         api_define_object(variation_list[i][1], variation_list[i][2])
     end
 end
+
+--EXAMPLE USAGE
+function define_wood_chair()
+    my_furniture_definition = {
+        id = "wood_chair",
+        name = "Wood Chair",
+        category = "Furniture",
+        tooltip = "A comfy wooden chair!",
+        tools = {"hammer1"}
+    }
+    define_from_variation_list(make_variated(my_furniture_definition, COLORS, "my_furniture", false))
+    api_define_object(my_furniture_definition, sprite_path(my_furniture_definition["id"])) --also define non-variated object.
+end
+
 
 --- Generates and returns a path to the sprite of an object as a string
 ---@param name string typically object_definition["id"]
