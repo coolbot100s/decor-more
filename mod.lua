@@ -47,16 +47,6 @@ function define_from_variation_list(variation_list)
     end
 end
 
---EXAMPLE USAGE
-function define_my_furniture()
-    COLORS = {"red","blue","yellow","green","orange","purple","black","white","gold","turqoise","lime","pink","brown"}
-    my_furniture_definition = {"object definition here"}
-    tooltip = {preface = "This is a", suffix = "piece of furniture by Me"}
-    define_from_variation_list(make_variated(my_furniture_definition, COLORS, "my_furniture", 1, tooltip))
-    api_define_object(my_furniture_definition, sprite_path(my_furniture_definition["id"])) --also define non-variated object.
-end
-
-
 --- Generates and returns a path to the sprite of an object as a string
 ---@param name string typically object_definition["id"]
 ---@param folder string (Optional) Subfolder for the sprite, if none is given will use name instead.
