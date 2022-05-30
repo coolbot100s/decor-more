@@ -9,6 +9,7 @@ function register()
     }    
 end
 function init()
+    define_wood_chairs()
     api_log("init", "ayo we did it")
     return "Success"
 end
@@ -55,9 +56,9 @@ function define_from_variation_list(variation_list)
 end
 
 --EXAMPLE USAGE
-function define_wood_chair()
+function define_wood_chairs()
     my_furniture_definition = {
-        id = "wood_chair",
+        id = "wood_chair",, 
         name = "Wood Chair",
         category = "Furniture",
         tooltip = "A comfy wooden chair!",
