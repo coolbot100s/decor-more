@@ -9,6 +9,20 @@ colorables = {
         category = "Furniture",
         tooltip = "A comfy wooden chair!",
         tools = {"hammer1"}
+    },
+    {
+        id = "wood_stool",
+        name = "Wood Stool",
+        category = "Furniture",
+        tooltip = "Great for your feet or your butt!",
+        tools = {"hammer1"}
+    },
+    {
+        id = "table_lamp",
+        name = "Tabmle Lamp",
+        category = "Furniture",
+        tooltip = "",
+        tools = {"hammer1"}
     }
 }
 
