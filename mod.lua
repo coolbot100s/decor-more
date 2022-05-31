@@ -29,7 +29,7 @@ colorables = {
 function register()
     return {
         name = MOD_NAME,
-        hooks = {}
+        hooks = {"helpers"}
     }
 end
 function init()
@@ -38,7 +38,7 @@ function init()
     return "Success"
 end
 
--- defines variant objects for things that can be coloured
+-- Defines objects from a list of "originals" and a list of desired variations. no tooltip modification, sprites should be located in a subfolder named after hte original items item_id.
 function mass_define_variations(bases, variations)
     for i = 1,#bases do
         folder = bases[i]["id"]
@@ -79,13 +79,12 @@ function make_variated(obj_def, variations, folder, edit_tooltip, tooltip)
     return variation_list
 end
 
+-- Intended to use the return of make_variated() to define objects.
 function define_from_variation_list(variation_list)
     for i = 1,#variation_list do
         api_define_object(variation_list[i][1], variation_list[i][2])
     end
 end
-
---EXAMPLE USAGE
 
 --- Generates and returns a path to the sprite of an object as a string
 ---@param name string typically object_definition["id"]
@@ -96,16 +95,4 @@ function sprite_path(name, folder)
     else
         return "sprites/" .. name "/" .. name .. ".png"
     end
-end
-
-function table.shallow_copy(t) --thanks google
-    local t2 = {}
-    for k,v in pairs(t) do
-      t2[k] = v
-    end
-    return t2
-end
-
-function cap(str) --thanks google
-    return (str:gsub("^%l", string.upper))
 end
