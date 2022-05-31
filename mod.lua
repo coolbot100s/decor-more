@@ -29,7 +29,8 @@ colorables = {
 function register()
     return {
         name = MOD_NAME,
-        hooks = {"helpers"}
+        hooks = {},
+        modules = {"helpers"}
     }
 end
 function init()
@@ -55,7 +56,7 @@ end
 ---@param variations table List of variations as a table with strings, example: COLORS
 ---@param folder string Name of the folder the spritesheets are found in.
 ---@param edit_tooltip boolean If the tooltip should be editid for each variation or not. If false tooltip will be the same for all variations
----@param tooltip table [Optional] a dictionary containing 3 items "preface" "insert" "suffix". Preface will come before the insert (changes on variation) part of the tooltip, "suffix" will come after. "insert" should contain a space on either side of the text you want to display, example: " Hello World " and NOT in preface or suffix. 
+---@param tooltip table (Optional) a dictionary containing 3 items "preface" "insert" "suffix". Preface will come before the insert (changes on variation) part of the tooltip, "suffix" will come after. "insert" should contain a space on either side of the text you want to display, example: " Hello World " and NOT in preface or suffix. 
 function make_variated(obj_def, variations, folder, edit_tooltip, tooltip)
     variation_list = {}
     for i = 1,#variations do
@@ -70,11 +71,7 @@ function make_variated(obj_def, variations, folder, edit_tooltip, tooltip)
                 cur["tooltip"] = tooltip["preface"] .. " " .. cap(variations[i]) .. " " .. tooltip["suffix"]
             end
         end
-        if type(folder) == "string" then
-            table.insert(variation_list, {cur, sprite_path(cur["id"], folder)})
-        else
-            table.insert(variation_list, {cur, sprite_path(cur["id"])})
-        end
+        table.insert(variation_list, {cur, sprite_path(cur["id"], folder)})
     end
     return variation_list
 end
