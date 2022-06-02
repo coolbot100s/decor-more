@@ -1,45 +1,24 @@
 -- https://github.com/coolbot100s/decor-more
 MOD_NAME = "decornmore"
+MOD_TITLE = "Decor N' More"
 
-COLORS = {"red","blue","yellow","green","orange","purple","black","white","gold","turquoise","lime","pink","brown"}
-colorables = {
-    {
-        id = "wood_chair",
-        name = "Wood Chair",
-        category = "Furniture",
-        tooltip = "A comfy wooden chair!",
-        tools = {"hammer1"}
-    },
-    {
-        id = "wood_stool",
-        name = "Wood Stool",
-        category = "Furniture",
-        tooltip = "Great for your feet or your butt!",
-        tools = {"hammer1"}
-    },
-    {
-        id = "table_lamp",
-        name = "Tabmle Lamp",
-        category = "Furniture",
-        tooltip = "",
-        tools = {"hammer1"}
-    }
-}
+-- log strings
+ITEM_REGISTRY = "ITEM REGISTRY"
 
 function register()
     return {
         name = MOD_NAME,
         hooks = {},
-        modules = {"helpers"}
+        modules = {"helpers", "object_tables"}
     }
 end
 function init()
-    api_log("init", "ayo we did it")
     mass_define_variations(colorables, COLORS)
+    define_from_table(decor, "furniture")
     return "Success"
 end
 
--- Defines objects from a list of "originals" and a list of desired variations. no tooltip modification, sprites should be located in a subfolder named after hte original items item_id.
+-- Defines objects from a list of "originals" and a list of desired variations. no tooltip modification, sprites should be located in a subfolder named after the original items item_id.
 function mass_define_variations(bases, variations)
     for i = 1,#bases do
         folder = bases[i]["id"]
@@ -49,6 +28,7 @@ function mass_define_variations(bases, variations)
         end
         api_define_object(bases[i], sprite_path(bases[i]["id"], folder))
     end
+    api_log(ITEM_REGISTRY, MOD_TITLE .. " Defined " .. #bases .. " New objects and " .. #bases * #variations .. " Variants.")
 end
 
 --- Returns a table of tables that contain obj_definitions and sprites with desired variations that can then be used like so: api_define_object(returned_val[i][1], returned_val[i][2])
@@ -62,7 +42,6 @@ function make_variated(obj_def, variations, folder, edit_tooltip, tooltip)
     for i = 1,#variations do
         cur = table.shallow_copy(obj_def) --current obj
         cur["id"] = variations[i] .. "_" .. obj_def["id"]
-        api_log("debug", cur["id"])
         cur["name"] = cap(variations[i]) .. " " .. obj_def["name"]
         if edit_tooltip == true then
             if tooltip["insert"] ~= nil then
@@ -76,13 +55,6 @@ function make_variated(obj_def, variations, folder, edit_tooltip, tooltip)
     return variation_list
 end
 
--- Intended to use the return of make_variated() to define objects.
-function define_from_variation_list(variation_list)
-    for i = 1,#variation_list do
-        api_define_object(variation_list[i][1], variation_list[i][2])
-    end
-end
-
 --- Generates and returns a path to the sprite of an object as a string
 ---@param name string typically object_definition["id"]
 ---@param folder string (Optional) Subfolder for the sprite, if none is given will use name instead.
@@ -93,3 +65,22 @@ function sprite_path(name, folder)
         return "sprites/" .. name "/" .. name .. ".png"
     end
 end
+
+-- Intended to use the return of make_variated() to define objects.
+function define_from_variation_list(variation_list)
+    for i = 1,#variation_list do
+        api_define_object(variation_list[i][1], variation_list[i][2])
+    end
+end
+
+--- Define objects from a table
+---@param table table List of object_definitions to be defined.
+---@param folder string Folder where object sprites are located.
+function define_from_table(table, folder)
+    for i = 1,#table do
+        cur = table[i]
+        api_define_object(cur, sprite_path(cur["id"], folder))
+    end
+    api_log(ITEM_REGISTRY, MOD_TITLE .. " Defined " .. #table .. " New objects.")
+end
+-- Does this really need to exist? i could jsut use define_from_variation_list... eh
