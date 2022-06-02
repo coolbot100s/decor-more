@@ -121,22 +121,26 @@ function click(button, click_type)
                     if string.find(highlighted["oid"], colorables[i]["id"]) then    -- If the clicked item's oid is from the colorables list
                         copy = table.shallow_copy(highlighted)
                         color = get_deco_brush_mode()                               -- make a copy
-                        for i = 1,#COLORS do                                                --TODO something about this part is breaking it
-                            if string.find(copy["oid"], COLORS[i]) ~= "fail" then   -- If it's colored..
-                                if COLORS[i] == color then                          -- If it's the same color as the selected brush
-                                    break                                           -- stop and don't do anything
-                                else
-                                    string.gsub(copy["oid"], COLORS[i], COLORS[i] .. "_", 1)        -- otherwise remove the color from the oid so that it can be changed.
+                        for i = 1,#COLORS do                                         
+                            if string.find(copy["oid"], COLORS[i]) ~= nil then      -- If it's colored..
+                                if COLORS[i] == color then                          -- If it's the same color as the brush.
+                                    api_log("already",  color)                      -- Do nothing
+                                    return
                                 end
-                            else
-                                api_log("can't find color", "")
+                                api_log("cur", COLORS[i])
+                                api_log("hi", "is colored")
+                                new_oid = string.gsub(copy["oid"], COLORS[i], color, 1)        -- otherwise replace the color with the new color
+                                api_destroy_inst(highlighted["id"])                             -- kill the old obj
+                                api_create_obj(new_oid, copy["x"], copy["y"])                   -- and replace it with the new painted version
+                                api_log("AYO?", new_oid)
+                                return
                             end
                         end
-                        api_log("this is a", highlighted["oid"])
+                        new_oid = string.insert(copy["oid"], color .. "_", #MOD_NAME + 1)       -- otherwise insert the color we want into the oid
+                        api_log("AYO 2", new_oid)
                         api_destroy_inst(highlighted["id"])
-                        new_oid = string.insert(copy["oid"], color, #MOD_NAME + 1)
-                        api_log("AYO?", new_oid)
                         api_create_obj(new_oid, copy["x"], copy["y"])
+                        break
                     end
                 end
             end
@@ -147,3 +151,4 @@ end
 function get_deco_brush_mode()
     return brush_mode
 end
+
