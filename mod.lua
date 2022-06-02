@@ -5,14 +5,11 @@ MOD_TITLE = "Decor N' More"
 -- log strings
 ITEM_REGISTRY = "ITEM REGISTRY"
 
--- Brush shit
-brush_mode = "red"
-
 function register()
     return {
         name = MOD_NAME,
         hooks = {"ready", "click"},
-        modules = {"helpers", "object_tables", "commands", "workbench"}
+        modules = {"helpers", "object_tables", "commands", "workbench", "cycler"}
     }
 end
 function init()
@@ -20,15 +17,7 @@ function init()
     define_from_table(decor, "furniture")
     define_commands()
     define_deco_workbench()
-    api_define_item(
-                        {
-                            id = "furniture_brush",
-                            name = "Furniture Brush",
-                            category = "Tool",
-                            tooltip = "Customize your furniture!",
-                            placable = false,
-                            singular = true
-                        }, "sprites/items/furniture_brush.png")
+    define_paintbrush()
     define_recipes(decor_recipes)
     return "Success"
 end
@@ -105,50 +94,10 @@ end
 -- Does this really need to exist? i could jsut use define_from_variation_list... eh
 
 function click(button, click_type)
-    if button == "LEFT" and click_type == "PRESSED" then                            -- if left click pressed
-        player = api_get_player_instance()
-        api_log("debug", player)
-        hb_index = api_gp(player, "hotbar") + 1
-        api_log("debug", hb_index)
-        holding = api_get_slot(player, hb_index)
-        api_log("hi", holding["item"])
-        if holding["item"] == "decornmore_furniture_brush" then                     -- if currently holding a furniture_brush
-            api_log("is brush", "woo")
-            highlighted = api_get_inst(api_get_highlighted("obj"))
-            if string.find(highlighted["oid"], MOD_NAME) then                       -- If the clicked item is from decornmore
-                api_log("from", "decornmore")
-                for i = 1,#colorables do                                            --
-                    if string.find(highlighted["oid"], colorables[i]["id"]) then    -- If the clicked item's oid is from the colorables list
-                        copy = table.shallow_copy(highlighted)
-                        color = get_deco_brush_mode()                               -- make a copy
-                        for i = 1,#COLORS do                                         
-                            if string.find(copy["oid"], COLORS[i]) ~= nil then      -- If it's colored..
-                                if COLORS[i] == color then                          -- If it's the same color as the brush.
-                                    api_log("already",  color)                      -- Do nothing
-                                    return
-                                end
-                                api_log("cur", COLORS[i])
-                                api_log("hi", "is colored")
-                                new_oid = string.gsub(copy["oid"], COLORS[i], color, 1)        -- otherwise replace the color with the new color
-                                api_destroy_inst(highlighted["id"])                             -- kill the old obj
-                                api_create_obj(new_oid, copy["x"], copy["y"])                   -- and replace it with the new painted version
-                                api_log("AYO?", new_oid)
-                                return
-                            end
-                        end
-                        new_oid = string.insert(copy["oid"], color .. "_", #MOD_NAME + 1)       -- otherwise insert the color we want into the oid
-                        api_log("AYO 2", new_oid)
-                        api_destroy_inst(highlighted["id"])
-                        api_create_obj(new_oid, copy["x"], copy["y"])
-                        break
-                    end
-                end
-            end
-        end
+    if button == "LEFT" and click_type == "PRESSED" then   
+        paint_brush_used()
     end
 end
 
-function get_deco_brush_mode()
-    return brush_mode
-end
+
 
