@@ -34,31 +34,45 @@ decor = {
         tools = {"hammer1"}
     },
     {
-        id = "flower_1",
+        id = "plant_a",
         name = "Decorative Plant",
         category = "Decoration",
         tooltip = "Makes me feel happy when it's in the room :)",
         tools = {"hammer1"}
     },
     {
-        id = "flower_2",
+        id = "plant_b",
         name = "Decorative Plant",
         category = "Decoration",
         tooltip = "Pretty and Pink",
         tools = {"hammer1"}
     },
     {
-        id = "flower_3",
+        id = "plant_c",
         name = "Decorative Plant",
         category = "Decoration",
-        tooltip = "",
+        tooltip = "?",
         tools = {"hammer1"}
     },
     {
-        id = "Globe", -- TODO Add the ability to spin the glone and see an animation
+        id = "plant_d",
+        name = "Decorative Plant",
+        category = "Decoration",
+        tooltip = "What a big boi",
+        tools = {"hammer1"}
+    },
+    {
+        id = "globe", -- TODO Add the ability to spin the glone and see an animation
         name = "Globe",
         category = "Decoration",
         tooltip = "It's weird I can never find the places I've been on this thing.",
+        tools = {"hammer1"}
+    },
+    {
+        id = "small_table",
+        name = "Small Table",
+        category = "Furniture",
+        tooltip = "A small wooden table with a glass top.",
         tools = {"hammer1"}
     }
 }
