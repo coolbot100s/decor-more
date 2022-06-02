@@ -8,15 +8,20 @@ ITEM_REGISTRY = "ITEM REGISTRY"
 function register()
     return {
         name = MOD_NAME,
-        hooks = {},
-        modules = {"helpers", "object_tables"}
+        hooks = {"ready"},
+        modules = {"helpers", "object_tables", "commands"}
     }
 end
 function init()
     mass_define_variations(colorables, COLORS)
     define_from_table(decor, "furniture")
+    define_commands()
     return "Success"
 end
+function ready()
+    add_to_dmp()
+end
+
 
 -- Defines objects from a list of "originals" and a list of desired variations. no tooltip modification, sprites should be located in a subfolder named after the original items item_id.
 function mass_define_variations(bases, variations)
