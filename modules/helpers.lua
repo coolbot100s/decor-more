@@ -11,3 +11,8 @@ end
 function cap(str) --thanks google
     return (str:gsub("^%l", string.upper))
 end
+
+
+function string.insert(str1, str2, pos) --thanks google
+  return str1:sub(1,pos)..str2..str1:sub(pos+1)
+end

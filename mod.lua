@@ -5,17 +5,31 @@ MOD_TITLE = "Decor N' More"
 -- log strings
 ITEM_REGISTRY = "ITEM REGISTRY"
 
+-- Brush shit
+brush_mode = "red"
+
 function register()
     return {
         name = MOD_NAME,
-        hooks = {"ready"},
-        modules = {"helpers", "object_tables", "commands"}
+        hooks = {"ready", "click"},
+        modules = {"helpers", "object_tables", "commands", "workbench"}
     }
 end
 function init()
     mass_define_variations(colorables, COLORS)
     define_from_table(decor, "furniture")
     define_commands()
+    define_deco_workbench()
+    api_define_item(
+                        {
+                            id = "furniture_brush",
+                            name = "Furniture Brush",
+                            category = "Tool",
+                            tooltip = "Customize your furniture!",
+                            placable = false,
+                            singular = true
+                        }, "sprites/items/furniture_brush.png")
+    define_recipes(decor_recipes)
     return "Success"
 end
 function ready()
@@ -89,3 +103,47 @@ function define_from_table(table, folder)
     api_log(ITEM_REGISTRY, MOD_TITLE .. " Defined " .. #table .. " New objects.")
 end
 -- Does this really need to exist? i could jsut use define_from_variation_list... eh
+
+function click(button, click_type)
+    if button == "LEFT" and click_type == "PRESSED" then                            -- if left click pressed
+        player = api_get_player_instance()
+        api_log("debug", player)
+        hb_index = api_gp(player, "hotbar") + 1
+        api_log("debug", hb_index)
+        holding = api_get_slot(player, hb_index)
+        api_log("hi", holding["item"])
+        if holding["item"] == "decornmore_furniture_brush" then                     -- if currently holding a furniture_brush
+            api_log("is brush", "woo")
+            highlighted = api_get_inst(api_get_highlighted("obj"))
+            if string.find(highlighted["oid"], MOD_NAME) then                       -- If the clicked item is from decornmore
+                api_log("from", "decornmore")
+                for i = 1,#colorables do                                            --
+                    if string.find(highlighted["oid"], colorables[i]["id"]) then    -- If the clicked item's oid is from the colorables list
+                        copy = table.shallow_copy(highlighted)
+                        color = get_deco_brush_mode()                               -- make a copy
+                        for i = 1,#COLORS do                                                --TODO something about this part is breaking it
+                            if string.find(copy["oid"], COLORS[i]) ~= "fail" then   -- If it's colored..
+                                if COLORS[i] == color then                          -- If it's the same color as the selected brush
+                                    break                                           -- stop and don't do anything
+                                else
+                                    string.gsub(copy["oid"], COLORS[i], COLORS[i] .. "_", 1)        -- otherwise remove the color from the oid so that it can be changed.
+                                end
+                            else
+                                api_log("can't find color", "")
+                            end
+                        end
+                        api_log("this is a", highlighted["oid"])
+                        api_destroy_inst(highlighted["id"])
+                        new_oid = string.insert(copy["oid"], color, #MOD_NAME + 1)
+                        api_log("AYO?", new_oid)
+                        api_create_obj(new_oid, copy["x"], copy["y"])
+                    end
+                end
+            end
+        end
+    end
+end
+
+function get_deco_brush_mode()
+    return brush_mode
+end

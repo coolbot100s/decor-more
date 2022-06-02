@@ -5,21 +5,25 @@ colorables = {
         name = "Wood Chair",
         category = "Furniture",
         tooltip = "A comfy wooden chair!",
-        tools = {"hammer1"}
+        tools = {"hammer1"},
+        item_sprite = sprite_path("icon_" .. "wood_chair", "icons"),
+        should_bee = ""
     },
     {
         id = "wood_stool",
         name = "Wood Stool",
         category = "Furniture",
         tooltip = "Great for your feet or your butt!",
-        tools = {"hammer1"}
+        tools = {"hammer1"},
+        should_bee = ""
     },
     {
         id = "table_lamp",          -- TODO add the ability to turn on / off as a light source
         name = "Table Lamp", --rip tabmle
         category = "Furniture",
         tooltip = "Perfect for your nightstand",
-        tools = {"hammer1"}
+        tools = {"hammer1"},
+        should_bee = ""
     }
 }
 
@@ -31,7 +35,8 @@ decor = {
         name = "Big Clock",
         category = "Furniture",
         tooltip = "",
-        tools = {"hammer1"}
+        tools = {"hammer1"},
+        item_sprite = sprite_path("icon_" .. "big_clock", "icons")
     },
     {
         id = "plant_a",
@@ -52,14 +57,16 @@ decor = {
         name = "Decorative Plant",
         category = "Decoration",
         tooltip = "?",
-        tools = {"hammer1"}
+        tools = {"hammer1"},
+        item_sprite = sprite_path("icon_" .. "plant_c", "icons")
     },
     {
         id = "plant_d",
         name = "Decorative Plant",
         category = "Decoration",
         tooltip = "What a big boi",
-        tools = {"hammer1"}
+        tools = {"hammer1"},
+        item_sprite = sprite_path("icon_" .. "plant_d", "icons")
     },
     {
         id = "globe", -- TODO Add the ability to spin the glone and see an animation
@@ -74,5 +81,41 @@ decor = {
         category = "Furniture",
         tooltip = "A small wooden table with a glass top.",
         tools = {"hammer1"}
+    },
+    {
+        id = "phonograph",
+        name = "Phonograph",
+        category = "Decoration",
+        tooltip = "If you put your ear up to it you can hear the ocean! once...",
+        tools = {"hammer1"},
+        item_sprite = sprite_path("icon_" .. "phonograph", "icons")
+    },
+    {
+        id = "rotary_phone",
+        name = "Rotary Phone",
+        category = "Decoration",
+        tooltip = "It keeps ringing but no one is ever on the other line.",
+        tools = {"hammer1"}
+    },
+    {
+        id = "teddy_bear",
+        name = "Teddy Bear",
+        category = "Best Friend",
+        tooltip = "Someone to keep you company in this lonely world.",
+        tools = {"hammer1"}
     }
 }
+
+decor_recipes = {
+    {{{"bench", 1}, {"planks2", 2}}, MOD_NAME .. "_wood_stool", 1},
+    {{{"bench", 1}, {"planks2", 3}}, MOD_NAME .. "_wood_chair", 1},
+    {{{"sticks2", 3}, {"planks2", 1}}, MOD_NAME .. "_table_lamp", 1},
+    {{{"sticks2", 3}, {"planks2", 2}}, MOD_NAME .. "_globe", 1},
+    {{{"sticks2", 3}, {"planks2", 2}}, MOD_NAME .. "_small_table", 1}
+}
+
+function define_recipes(recipes)
+    for i = 1,#recipes do
+        dw_define_recipe(recipes[i][1],recipes[i][2],recipes[i][3])
+    end
+end
