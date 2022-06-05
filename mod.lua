@@ -97,9 +97,9 @@ function click(button, click_type)
     if button == "LEFT" and click_type == "PRESSED" then
         dye_used()
     end
-    if button == "RIGHT" and click_type == "PRESSED" then
-        paint_brush_update()
-    end
+--    if button == "RIGHT" and click_type == "PRESSED" then
+--        paint_brush_update()
+--    end
 end
 
 
