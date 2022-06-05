@@ -10,7 +10,7 @@ function register()
     return {
         name = MOD_NAME,
         hooks = {"ready", "click"},
-        modules = {"helpers", "object_tables", "commands", "workbench", "painting"}
+        modules = {"helpers", "object_tables", "commands", "crafting", "painting", "recipes"}
     }
 end
 function init()

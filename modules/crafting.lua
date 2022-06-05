@@ -1,3 +1,4 @@
+-- crafting.lua
 -- thanks beecubed! https://github.com/APICO-Modders/APICO-Community-Decorations/blob/crafting_tables/modules/crafting.lua
 
 DECO_WORKBENCH_RECIPES = {}
