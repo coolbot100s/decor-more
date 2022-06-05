@@ -1,6 +1,6 @@
 -- object_tables.lua
 COLORS = {"red","blue","yellow","green","orange","purple","black","white","gold","turquoise","lime","pink","brown"}
-dyeid_color = {"dye1", "red", "dye2", "blue", "dye3", "yellow", "dye4", "green", "dye5", "orange", "dye6", "purple", "dye7", "black", "dye8", "white", "dye12", "gold", "dye13", "turqoise", "dye14", "lime", "dye15", "pink", "dye16", "brown"}
+dyeid_color = {"dye1", "red", "dye2", "blue", "dye3", "yellow", "dye4", "green", "dye5", "orange", "dye6", "purple", "dye7", "black", "dye8", "white", "dye12", "gold", "dye13", "turquoise", "dye14", "lime", "dye15", "pink", "dye16", "brown"}
 
 colorables = {
     {
@@ -11,13 +11,13 @@ colorables = {
         tools = {"hammer1"},
         item_sprite = sprite_path("icon_" .. "wood_chair", "icons")
     },
---    {
---        id = "comfy_chair",
---        name = "Comfy Chair",
---        category = "Furniture",
---        tooltip = "A comfy chair!",
---        tools = {"hammer1"}
---    },
+    {
+        id = "comfy_chair",
+        name = "Comfy Chair",
+        category = "Furniture",
+        tooltip = "A comfy chair!",
+        tools = {"hammer1"}
+    },
     {
         id = "wood_stool",
         name = "Wood Stool",
