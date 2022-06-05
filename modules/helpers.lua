@@ -16,3 +16,30 @@ end
 function string.insert(str1, str2, pos) --thanks google
   return str1:sub(1,pos)..str2..str1:sub(pos+1)
 end
+
+function table.search(table, value)
+  for i = 1,#table do
+      if table[i] == value then
+          return true, i
+      end
+  end
+  return false
+end
+
+-- Returns the index of the value in the table, or false if not found
+function table.search(table, value)
+  for i = 1,#table do
+      if table[i] == value then
+          return i
+      end
+  end
+  return false
+end
+
+-- Returns the slot currently held by the player.
+function get_held()
+  player = api_get_player_instance()
+  hb_index = api_gp(player, "hotbar") + 1
+  holding = api_get_slot(player, hb_index)
+  return holding
+end

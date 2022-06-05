@@ -1,3 +1,4 @@
+-- decornmore mod.lua
 -- https://github.com/coolbot100s/decor-more
 MOD_NAME = "decornmore"
 MOD_TITLE = "Decor N' More"
@@ -9,7 +10,7 @@ function register()
     return {
         name = MOD_NAME,
         hooks = {"ready", "click"},
-        modules = {"helpers", "object_tables", "commands", "workbench", "cycler"}
+        modules = {"helpers", "object_tables", "commands", "workbench", "painting"}
     }
 end
 function init()
@@ -17,7 +18,6 @@ function init()
     define_from_table(decor, "furniture")
     define_commands()
     define_deco_workbench()
-    define_paintbrush()
     define_recipes(decor_recipes)
     return "Success"
 end
@@ -94,8 +94,11 @@ end
 -- Does this really need to exist? i could jsut use define_from_variation_list... eh
 
 function click(button, click_type)
-    if button == "LEFT" and click_type == "PRESSED" then   
-        paint_brush_used()
+    if button == "LEFT" and click_type == "PRESSED" then
+        dye_used()
+    end
+    if button == "RIGHT" and click_type == "PRESSED" then
+        paint_brush_update()
     end
 end
 

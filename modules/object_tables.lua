@@ -1,4 +1,6 @@
 COLORS = {"red","blue","yellow","green","orange","purple","black","white","gold","turquoise","lime","pink","brown"}
+dyeid_color = {"dye1", "red", "dye2", "blue", "dye3", "yellow", "dye4", "green", "dye5", "orange", "dye6", "purple", "dye7", "black", "dye8", "white", "dye12", "gold", "dye13", "turqoise", "dye14", "lime", "dye15", "pink", "dye16", "brown"}
+
 colorables = {
     {
         id = "wood_chair",
@@ -6,26 +8,25 @@ colorables = {
         category = "Furniture",
         tooltip = "A comfy wooden chair!",
         tools = {"hammer1"},
-        item_sprite = sprite_path("icon_" .. "wood_chair", "icons"),
-        should_bee = ""
+        item_sprite = sprite_path("icon_" .. "wood_chair", "icons")
     },
     {
         id = "wood_stool",
         name = "Wood Stool",
         category = "Furniture",
         tooltip = "Great for your feet or your butt!",
-        tools = {"hammer1"},
-        should_bee = ""
+        tools = {"hammer1"}
     },
     {
         id = "table_lamp",          -- TODO add the ability to turn on / off as a light source
         name = "Table Lamp", --rip tabmle
         category = "Furniture",
         tooltip = "Perfect for your nightstand",
-        tools = {"hammer1"},
-        should_bee = ""
+        tools = {"hammer1"}
     }
 }
+
+
 
 
 -- pretty much all non variated items will go here methinks
