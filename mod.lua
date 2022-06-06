@@ -18,6 +18,7 @@ function init()
     define_from_table(decor, "furniture")
     define_commands()
     define_deco_workbench()
+    dw_define_tabs(2)
     define_recipes(decor_recipes)
     return "Success"
 end

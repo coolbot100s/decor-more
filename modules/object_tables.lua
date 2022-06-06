@@ -115,8 +115,7 @@ decor = {
         name = "Decorative Plant",
         category = "Decoration",
         tooltip = "Makes me feel happy when it's in the room :)",
-        tools = {"hammer1"},
-        item_sprite = sprite_path("icon_" .. "plant_a", "icons")
+        tools = {"hammer1"}
     },
     {
         id = "plant_b",
@@ -174,8 +173,7 @@ decor = {
         name = "Phonograph",
         category = "Decoration",
         tooltip = "If you put your ear up to it you can hear the ocean! once...",
-        tools = {"hammer1"},
-        item_sprite = sprite_path("icon_" .. "phonograph", "icons")
+        tools = {"hammer1"}
     },
     {
         id = "rotary_phone",
